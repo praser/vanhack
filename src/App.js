@@ -15,7 +15,7 @@ class App extends Component {
       <div>
         <Header>
           <Logo
-            src='https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg'
+            src='https://app.vanhack.com/LayoutV3/Style/img/shared/navbar/VanHack-logo.svg'
             width='100'
             height='58'
             alt='Logo'

@@ -36,9 +36,9 @@ class SignupForm extends Component {
 
   render() {
     return (
-      <form className='z-depth-4' onSubmit={this.handleSubmit}>
+      <form className='col s12 m10 l8 offset-m1 offset-l2 z-depth-5' onSubmit={this.handleSubmit}>
         <Row>
-          <Col s={12} m={10} l={8} offset='m1 l2'>
+          <Col>
             <h5 className="center">Create account</h5>
             <Input s={12} name='name' label='Full name' value={this.state.name} onChange={this.handleInput} validate>
               <Icon>person</Icon>
@@ -57,7 +57,7 @@ class SignupForm extends Component {
         </Row>
         <Row>
           <center>
-            <Button waves='light' className='center red lighten-3'>Create account</Button>
+            <Button waves='light' className='center blue-grey'>Create account</Button>
           </center>
         </Row>
       </form>
