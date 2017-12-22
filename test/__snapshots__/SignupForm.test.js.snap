@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignupForm> renders SignupForm without crashing 1`] = `
+<form
+  className="z-depth-4"
+  onSubmit={[Function]}
+>
+  <Row>
+    <Col
+      l={8}
+      m={10}
+      offset="m1 l2"
+      s={12}
+    >
+      <h5
+        className="center"
+      >
+        Create account
+      </h5>
+      <Input
+        checked={false}
+        label="Full name"
+        name="name"
+        onChange={[Function]}
+        s={12}
+        type="text"
+        validate={true}
+        value=""
+      >
+        <Icon>
+          person
+        </Icon>
+      </Input>
+      <Input
+        checked={false}
+        label="Email"
+        name="email"
+        onChange={[Function]}
+        s={12}
+        type="email"
+        validate={true}
+        value=""
+      >
+        <Icon>
+          email
+        </Icon>
+      </Input>
+      <Input
+        checked={false}
+        label="Password"
+        name="password"
+        onChange={[Function]}
+        s={12}
+        type="password"
+        validate={true}
+        value=""
+      >
+        <Icon>
+          lock
+        </Icon>
+      </Input>
+      <Input
+        checked={false}
+        label="I have read and accept use terms."
+        name="agree"
+        onChange={[Function]}
+        type="checkbox"
+      />
+    </Col>
+  </Row>
+  <Row>
+    <center>
+      <Button
+        className="center red lighten-3"
+        node="button"
+        waves="light"
+      >
+        Create account
+      </Button>
+    </center>
+  </Row>
+</form>
+`;
