@@ -1,13 +1,8 @@
-import 'materialize-css/dist/css/materialize.css';
-import 'jquery';
-import './App.css';
+import './assets/css/App.css';
 
 import React, { Component } from 'react';
-import { Row } from 'react-materialize';
 
 import SignupForm from './components/SignupForm';
-import Header from './components/Header';
-import Logo from './components/Logo';
 
 class App extends Component {
   render() {
@@ -15,7 +10,7 @@ class App extends Component {
       <div>
         <Header>
           <Logo
-            src='https://app.vanhack.com/LayoutV3/Style/img/shared/navbar/VanHack-logo.svg'
+            src={logo}
             width='100'
             height='58'
             alt='Logo'
