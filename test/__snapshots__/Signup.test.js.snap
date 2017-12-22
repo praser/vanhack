@@ -2,16 +2,11 @@
 
 exports[`<SignupForm> renders SignupForm without crashing 1`] = `
 <form
-  className="z-depth-4"
+  className="col s12 m10 l8 offset-m1 offset-l2 z-depth-5"
   onSubmit={[Function]}
 >
   <Row>
-    <Col
-      l={8}
-      m={10}
-      offset="m1 l2"
-      s={12}
-    >
+    <Col>
       <h5
         className="center"
       >
@@ -71,7 +66,7 @@ exports[`<SignupForm> renders SignupForm without crashing 1`] = `
   <Row>
     <center>
       <Button
-        className="center red lighten-3"
+        className="center blue-grey"
         node="button"
         waves="light"
       >

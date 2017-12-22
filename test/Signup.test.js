@@ -1,5 +1,5 @@
 import React from 'react';
-import SignupForm from '../src/components/SignupForm';
+import SignupForm from '../src/Signup';
 import { wrap } from 'module';
 
 describe('<SignupForm>', () => {
