@@ -16,22 +16,24 @@ class SignupForm extends Component {
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(event) {
-    const state = {};
-    state[event.target.name] = event.target.value;
-    this.setState(state);
+    switch(event.target.type){
+      case 'checkbox':
+        this.handleState(event.target.name, event.target.checked);
+        break;
+      default:
+        this.handleState(event.target.name, event.target.value);
+    }
     this.handleButton(event.target);
   }
 
-  handleCheckboxChange(event) {
+  handleState(key, value) {
     const state = {};
-    state[event.target.name] = event.target.checked;
+    state[key] = value;
     this.setState(state);
-    this.handleButton(event.target);
   }
 
   handleSubmit(event) {
@@ -46,23 +48,28 @@ class SignupForm extends Component {
 
   validateForm(target) {
     const fields = [].slice.call(document.getElementsByTagName('input'));
-    console.log(fields.map((field) => field.checkValidity()).every((el) => el));
     return fields.map((field) => field.checkValidity()).every((el) => el);
   }
 
   postData() {
     const url = 'http://localhost:3030/users';
     const headers = new Headers();
+    let status = 0
     headers.append('Content-Type', 'application/json');
     fetch(url, {
       method: 'post',
       body: JSON.stringify(this.state),
       headers: headers
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      Materialize.toast("Your account has been created. We're so proud about you!", 4000)
+    .then(response => {
+      status = response.status;
+      return response.json()
+    })
+    .then(json => {
+      console.log(json);
+      if(status >= 400) {
+        throw new Error('Bad request or server error');
+      }
     })
     .catch(() => Materialize.toast("Something went wrong. We hope it works when you try again.", 4000))
   }
