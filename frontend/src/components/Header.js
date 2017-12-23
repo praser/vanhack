@@ -1,10 +1,9 @@
 import React from 'react';
-import { Row } from 'react-materialize';
 import { NavLink } from 'react-router-dom';
 
 const Header = ({children}) => (
-  <Row>
-    <nav className="blue-grey darken-3">
+  <div className="row">
+    <nav className="teal darken-3">
       <div className="nav-wrapper">
         <NavLink exact to="/" className="brand-logo center">{children}</NavLink>
         <ul className="right">
@@ -12,7 +11,7 @@ const Header = ({children}) => (
         </ul>
       </div>
     </nav>
-  </Row>
+  </div>
 );
 
 export default Header

@@ -1,78 +1,74 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SignupForm> renders SignupForm without crashing 1`] = `
-<form
-  className="col s12 m10 l8 offset-m1 offset-l2 z-depth-5"
-  onSubmit={[Function]}
+<div
+  className="row"
 >
-  <Row>
-    <Col>
-      <h5
-        className="center"
+  <form
+    className="col z-depth-5 s10 m8 l6 offset-s1 offset-m2 offset-l3"
+    onSubmit={[Function]}
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col s12"
       >
-        Create account
-      </h5>
-      <Input
-        checked={false}
-        label="Full name"
-        name="name"
-        onChange={[Function]}
-        s={12}
-        type="text"
-        validate={true}
-        value=""
+        <h5
+          className="center"
+        >
+          Create account
+        </h5>
+        <Input
+          label="Full name"
+          name="name"
+          size="s12"
+          type="text"
+        />
+        <Input
+          label="E-mail"
+          name="email"
+          size="s12"
+          type="email"
+        />
+        <Input
+          label="Password"
+          name="password"
+          size="s12"
+          type="password"
+        />
+        <div
+          className="col"
+        >
+          <input
+            id="agreement"
+            name="agreement"
+            type="checkbox"
+          />
+          <label
+            htmlFor="agreement"
+          >
+            I agree with terms of use.
+          </label>
+        </div>
+      </div>
+    </div>
+    <center
+      className="row"
+    >
+      <button
+        className="btn waves-effect waves-light center"
+        name="action"
+        type="submit"
       >
-        <Icon>
-          person
-        </Icon>
-      </Input>
-      <Input
-        checked={false}
-        label="Email"
-        name="email"
-        onChange={[Function]}
-        s={12}
-        type="email"
-        validate={true}
-        value=""
-      >
-        <Icon>
-          email
-        </Icon>
-      </Input>
-      <Input
-        checked={false}
-        label="Password"
-        name="password"
-        onChange={[Function]}
-        s={12}
-        type="password"
-        validate={true}
-        value=""
-      >
-        <Icon>
-          lock
-        </Icon>
-      </Input>
-      <Input
-        checked={false}
-        label="I have read and accept use terms."
-        name="agreement"
-        onChange={[Function]}
-        type="checkbox"
-      />
-    </Col>
-  </Row>
-  <Row>
-    <center>
-      <Button
-        className="center blue-grey"
-        node="button"
-        waves="light"
-      >
-        Create account
-      </Button>
+        Submit
+        <i
+          className="material-icons right"
+        >
+          send
+        </i>
+      </button>
     </center>
-  </Row>
-</form>
+  </form>
+</div>
 `;

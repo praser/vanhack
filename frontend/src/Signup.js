@@ -1,5 +1,8 @@
+import 'hammerjs'
+import Materialize from 'materialize-css/dist/js/materialize.js';
+
 import React, { Component } from 'react';
-import { Button, Col, Icon, Input, Row} from 'react-materialize';
+import Input from './components/Input';
 
 class SignupForm extends Component {
   constructor(props) {
@@ -31,36 +34,52 @@ class SignupForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
+    this.postData();
+  }
+
+  postData() {
+    const url = 'http://localhost:3030/users';
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    fetch(url, {
+      method: 'post',
+      body: JSON.stringify(this.state),
+      headers: headers
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      Materialize.toast("Account successfully create", 4000)
+    })
+    .catch(() => Materialize.toast("Something went wrong. We're so sorry...", 4000))
   }
 
   render() {
+    const size = 's12';
     return (
-      <form className='col s12 m10 l8 offset-m1 offset-l2 z-depth-5' onSubmit={this.handleSubmit}>
-        <Row>
-          <Col>
-            <h5 className="center">Create account</h5>
-            <Input s={12} name='name' label='Full name' value={this.state.name} onChange={this.handleInput} validate>
-              <Icon>person</Icon>
-            </Input>
-
-            <Input s={12} name='email' label="Email" type='email' value={this.state.email} onChange={this.handleInput} validate>
-              <Icon>email</Icon>
-            </Input>
-            
-            <Input s={12} name='password' label="Password" type='password' value={this.state.password} onChange={this.handleInput} validate>
-              <Icon>lock</Icon>
-            </Input>
-
-            <Input name='agreement' label='I have read and accept use terms.' type='checkbox' onChange={this.handleCheckbox} />
-          </Col>
-        </Row>
-        <Row>
-          <center>
-            <Button waves='light' className='center blue-grey'>Create account</Button>
+      <div className='row'>
+        <form className='col z-depth-5 s10 m8 l6 offset-s1 offset-m2 offset-l3'
+              onSubmit={this.handleSubmit}
+        >
+          <div className="row">
+            <div className="col s12">
+              <h5 className="center">Create account</h5>
+              <Input label='Full name' name='name' type='text' size={size}/>
+              <Input label='E-mail' name='email' type='email' size={size} />
+              <Input label='Password' name='password' type='password' size={size} />
+              <div className='col'>
+                <input type='checkbox' name='agreement' id='agreement' />
+                <label htmlFor='agreement'>I agree with terms of use.</label>
+              </div>
+            </div>
+          </div>
+          <center className="row">
+            <button className="btn waves-effect waves-light center" type="submit" name="action">Submit
+              <i className="material-icons right">send</i>
+            </button>
           </center>
-        </Row>
-      </form>
+        </form>
+      </div>
     )
   }
 }
