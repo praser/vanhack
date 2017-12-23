@@ -9,7 +9,7 @@ class SignupForm extends Component {
       name: '',
       email: '',
       password: '',
-      agree: false
+      agreement: false
     }
 
     this.handleInput = this.handleInput.bind(this);
@@ -52,7 +52,7 @@ class SignupForm extends Component {
               <Icon>lock</Icon>
             </Input>
 
-            <Input name='agree' label='I have read and accept use terms.' type='checkbox' onChange={this.handleCheckbox} />
+            <Input name='agreement' label='I have read and accept use terms.' type='checkbox' onChange={this.handleCheckbox} />
           </Col>
         </Row>
         <Row>

@@ -57,7 +57,7 @@ exports[`<SignupForm> renders SignupForm without crashing 1`] = `
       <Input
         checked={false}
         label="I have read and accept use terms."
-        name="agree"
+        name="agreement"
         onChange={[Function]}
         type="checkbox"
       />

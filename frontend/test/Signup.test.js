@@ -33,14 +33,14 @@ describe('<SignupForm>', () => {
     expect(wrapper.find('input[name="password"]').prop('type')).toEqual('password');
   })
 
-  it('must have a agree input', () => {
+  it('must have a agreement input', () => {
     const wrapper = mount(<SignupForm />);
-    expect(wrapper.find('input[name="agree"]').length).toEqual(1);
+    expect(wrapper.find('input[name="agreement"]').length).toEqual(1);
   })
 
-  it('agree must be a checkbox input', () => {
+  it('agreement must be a checkbox input', () => {
     const wrapper = mount(<SignupForm />);
-    expect(wrapper.find('input[name="agree"]').prop('type')).toEqual('checkbox');
+    expect(wrapper.find('input[name="agreement"]').prop('type')).toEqual('checkbox');
   })
 
   it('must have only a button', () => {
