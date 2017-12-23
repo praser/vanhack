@@ -21,19 +21,28 @@ exports[`<SignupForm> renders SignupForm without crashing 1`] = `
         </h5>
         <Input
           label="Full name"
+          msgError="Full name is a required field"
           name="name"
+          onChange={[Function]}
+          required={true}
           size="s12"
           type="text"
         />
         <Input
           label="E-mail"
+          msgError="The value you gave does not seems a valid e-mail address"
           name="email"
+          onChange={[Function]}
+          required={true}
           size="s12"
           type="email"
         />
         <Input
           label="Password"
+          msgError="Password is a required field"
           name="password"
+          onChange={[Function]}
+          required={true}
           size="s12"
           type="password"
         />
@@ -41,11 +50,15 @@ exports[`<SignupForm> renders SignupForm without crashing 1`] = `
           className="col"
         >
           <input
+            className="validate"
             id="agreement"
             name="agreement"
+            onChange={[Function]}
+            required={true}
             type="checkbox"
           />
           <label
+            data-error="opss"
             htmlFor="agreement"
           >
             I agree with terms of use.
@@ -58,6 +71,7 @@ exports[`<SignupForm> renders SignupForm without crashing 1`] = `
     >
       <button
         className="btn waves-effect waves-light center"
+        disabled={true}
         name="action"
         type="submit"
       >

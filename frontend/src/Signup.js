@@ -15,26 +15,39 @@ class SignupForm extends Component {
       agreement: false
     }
 
-    this.handleInput = this.handleInput.bind(this);
-    this.handleCheckbox = this.handleCheckbox.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInput(event) {
+  handleInputChange(event) {
     const state = {};
     state[event.target.name] = event.target.value;
     this.setState(state);
+    this.handleButton(event.target);
   }
 
-  handleCheckbox(event) {
+  handleCheckboxChange(event) {
     const state = {};
     state[event.target.name] = event.target.checked;
     this.setState(state);
+    this.handleButton(event.target);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.postData();
+    return this.validateForm(event.target) ? this.postData() : false;
+  }
+
+  handleButton(target) {
+    const btn = document.querySelector('form button');
+    this.validateForm(target) ? btn.disabled = false : btn.disabled = true;
+  }
+
+  validateForm(target) {
+    const fields = [].slice.call(document.getElementsByTagName('input'));
+    console.log(fields.map((field) => field.checkValidity()).every((el) => el));
+    return fields.map((field) => field.checkValidity()).every((el) => el);
   }
 
   postData() {
@@ -49,32 +62,30 @@ class SignupForm extends Component {
     .then(response => response.json())
     .then(data => {
       console.log(data);
-      Materialize.toast("Account successfully create", 4000)
+      Materialize.toast("Your account has been created. We're so proud about you!", 4000)
     })
-    .catch(() => Materialize.toast("Something went wrong. We're so sorry...", 4000))
+    .catch(() => Materialize.toast("Something went wrong. We hope it works when you try again.", 4000))
   }
 
   render() {
     const size = 's12';
     return (
       <div className='row'>
-        <form className='col z-depth-5 s10 m8 l6 offset-s1 offset-m2 offset-l3'
-              onSubmit={this.handleSubmit}
-        >
+        <form className='col z-depth-5 s10 m8 l6 offset-s1 offset-m2 offset-l3' onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col s12">
               <h5 className="center">Create account</h5>
-              <Input label='Full name' name='name' type='text' size={size}/>
-              <Input label='E-mail' name='email' type='email' size={size} />
-              <Input label='Password' name='password' type='password' size={size} />
+              <Input label='Full name' name='name' type='text' size={size} onChange={this.handleInputChange} required={true} msgError='Full name is a required field'/>
+              <Input label='E-mail' name='email' type='email' size={size} onChange={this.handleInputChange} required={true} msgError='The value you gave does not seems a valid e-mail address'/>
+              <Input label='Password' name='password' type='password' size={size} onChange={this.handleInputChange} required={true} msgError='Password is a required field' />
               <div className='col'>
-                <input type='checkbox' name='agreement' id='agreement' />
-                <label htmlFor='agreement'>I agree with terms of use.</label>
+                <input type='checkbox' name='agreement' id='agreement' onChange={this.handleInputChange} className='validate' required/>
+                <label htmlFor='agreement' data-error='opss'>I agree with terms of use.</label>
               </div>
             </div>
           </div>
           <center className="row">
-            <button className="btn waves-effect waves-light center" type="submit" name="action">Submit
+            <button className="btn waves-effect waves-light center" type="submit" name="action" disabled>Submit
               <i className="material-icons right">send</i>
             </button>
           </center>
