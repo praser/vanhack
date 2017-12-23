@@ -2,6 +2,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background: #41c8f2 url('../images/background.png') bottom repeat-x;
 }
 
 main {
@@ -10,4 +11,8 @@ main {
 
 form {
   padding: 5px 0;
+}
+
+.col {
+  background-color: #fff;
 }
