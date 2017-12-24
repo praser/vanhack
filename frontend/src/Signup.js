@@ -5,11 +5,16 @@ import React, { Component } from 'react';
 import Input from './components/Input';
 import If from './components/If';
 import Loading from './components/Loading';
+import User from './models/User';
+import { Redirect } from 'react-router-dom';
 
 class SignupForm extends Component {
   constructor(props){
     super();
-    this.state = { loading: false };
+    this.state = {
+      loading: false,
+      triggerRedirect: false,
+    };
   }
   _handleSubmit(event) {
     event.preventDefault();
@@ -28,6 +33,7 @@ class SignupForm extends Component {
 
   _postForm() {
     this.setState({loading: true})
+    let status = 0;
     const url = 'http://localhost:3030/users';
     const requestInfo = {
       method: 'POST',
@@ -42,12 +48,23 @@ class SignupForm extends Component {
 
     fetch(url, requestInfo)
     .then(response => {
+      status = response.status;
       if(response.ok) {
         Materialize.toast('Congratulatios! Your account has been created.', 4000);
       } else {
         Materialize.toast('Ops, look like you dont fill the form very well. Please double check it and try again.', 4000);
       }
       setTimeout(() => this.setState({loading: false}), 1000);
+      return response.json();
+    })
+    .then(json => {
+      const user = new User(json);
+      if (status < 400) {
+        user.save();
+        this.setState({ triggerRedirect: true })
+      } else {
+        user.logout();
+      }
     })
     .catch(() => {
       Materialize.toast("Something went wrong. We hope it works when you try again.", 4000);
@@ -101,6 +118,9 @@ class SignupForm extends Component {
         </form>
         <If test={this.state.loading}>
           <Loading />
+        </If>
+        <If test={this.state.triggerRedirect}>
+          <Redirect to='/dashboard' />
         </If>
       </div>
     )
