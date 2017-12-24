@@ -2,15 +2,7 @@ import React from 'react';
 
 const Input = (props) => (
   <div className={`input-field col ${[props.size, props.offset].join(' ')}`}>
-    <input
-      name={props.name}
-      value={props.value}
-      type={props.type}
-      className='validate'
-      onChange={props.onChange}
-      onBlur={props.onBlur}
-      required={props.required}
-    />
+    {props.children}
     <label 
       htmlFor={props.name}
       data-error={props.msgError}

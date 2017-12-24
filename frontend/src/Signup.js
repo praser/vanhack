@@ -3,73 +3,51 @@ import Materialize from 'materialize-css/dist/js/materialize.js';
 
 import React, { Component } from 'react';
 import Input from './components/Input';
+import If from './components/If';
+import Loading from './components/Loading';
 
 class SignupForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: '',
-      email: '',
-      password: '',
-      agreement: false
-    }
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props){
+    super();
+    this.state = { loading: false };
   }
-
-  handleInputChange(event) {
-    switch(event.target.type){
-      case 'checkbox':
-        this.handleState(event.target.name, event.target.checked);
-        break;
-      default:
-        this.handleState(event.target.name, event.target.value);
-    }
-    this.handleButton(event.target);
-  }
-
-  handleState(key, value) {
-    const state = {};
-    state[key] = value;
-    this.setState(state);
-  }
-
-  handleSubmit(event) {
+  _handleSubmit(event) {
     event.preventDefault();
-    return this.validateForm(event.target) ? this.postData() : false;
+    return this._validateForm(event.target) ? this._postForm() : false;
   }
 
-  handleButton(target) {
+  _handleButton(target) {
     const btn = document.querySelector('form button');
-    this.validateForm(target) ? btn.disabled = false : btn.disabled = true;
+    this._validateForm() ? btn.disabled = false : btn.disabled = true;
   }
 
-  validateForm(target) {
-    const fields = [].slice.call(document.getElementsByTagName('input'));
+  _validateForm() {
+    const fields = [this.name, this.email, this.password, this.agreement];
     return fields.map((field) => field.checkValidity()).every((el) => el);
   }
 
-  postData() {
+  _postForm() {
+    this.setState({loading: true})
     const url = 'http://localhost:3030/users';
-    const headers = new Headers();
-    let status = 0
-    headers.append('Content-Type', 'application/json');
-    fetch(url, {
-      method: 'post',
-      body: JSON.stringify(this.state),
-      headers: headers
-    })
+    const requestInfo = {
+      method: 'POST',
+      body: JSON.stringify({
+        name: this.name.value,
+        email: this.email.value,
+        password: this.password.value,
+        agreement: this.agreement.value
+      }),
+      headers: new Headers({'Content-Type': 'application/json'})
+    }
+
+    fetch(url, requestInfo)
     .then(response => {
-      status = response.status;
-      return response.json()
-    })
-    .then(json => {
-      console.log(json);
-      if(status >= 400) {
-        throw new Error('Bad request or server error');
+      if(response.ok) {
+        Materialize.toast('Congratulatios! Your account has been created.', 4000);
+      } else {
+        Materialize.toast('Ops, look like you dont fill the form very well. Please double check it and try again.', 4000);
       }
+      setTimeout(() => this.setState({loading: false}), 1000);
     })
     .catch(() => Materialize.toast("Something went wrong. We hope it works when you try again.", 4000))
   }
@@ -78,25 +56,49 @@ class SignupForm extends Component {
     const size = 's12';
     return (
       <div className='row'>
-        <form className='col z-depth-5 s10 m8 l6 offset-s1 offset-m2 offset-l3' onSubmit={this.handleSubmit}>
+        <form className='col z-depth-5 s10 m8 l6 offset-s1 offset-m2 offset-l3' onSubmit={this._handleSubmit.bind(this)}>
           <div className="row">
             <div className="col s12">
               <h5 className="center">Create account</h5>
-              <Input label='Full name' name='name' type='text' size={size} onChange={this.handleInputChange} required={true} msgError='Full name is a required field'/>
-              <Input label='E-mail' name='email' type='email' size={size} onChange={this.handleInputChange} required={true} msgError='The value you gave does not seems a valid e-mail address'/>
-              <Input label='Password' name='password' type='password' size={size} onChange={this.handleInputChange} required={true} msgError='Password is a required field' />
+              <Input label='Full name' name='name' size={size} msgError='Full name is a required field'>
+                <input name='name' type='text' className='validate' required
+                  onChange={this._handleButton.bind(this)}
+                  ref={(input) => this.name = input}
+                />
+              </Input>
+              
+              <Input label='E-mail' name='email' size={size} msgError='The value you gave does not seems a valid e-mail address'>
+                <input name='name' type='email' className='validate' required
+                  onChange={this._handleButton.bind(this)}
+                  ref={(input) => this.email = input}
+                />
+              </Input>
+              
+              <Input label='Password' name='password' size={size} msgError='Password is a required field'>
+              <input name='name' type='password' className='validate' required
+                  onChange={this._handleButton.bind(this)}
+                  ref={(input) => this.password = input}
+                />
+              </Input>
+              
               <div className='col'>
-                <input type='checkbox' name='agreement' id='agreement' onChange={this.handleInputChange} className='validate' required/>
+                <input  type='checkbox' name='agreement' id='agreement' className='validate' required
+                        onChange={this._handleButton.bind(this)}
+                        ref={(input) => this.agreement = input} />
                 <label htmlFor='agreement' data-error='opss'>I agree with terms of use.</label>
               </div>
             </div>
           </div>
           <center className="row">
-            <button className="btn waves-effect waves-light center" type="submit" name="action" disabled>Submit
+            <button className="btn waves-effect waves-light center" type="submit" name="action" disabled>
+              Submit
               <i className="material-icons right">send</i>
             </button>
           </center>
         </form>
+        <If test={this.state.loading}>
+          <Loading />
+        </If>
       </div>
     )
   }
