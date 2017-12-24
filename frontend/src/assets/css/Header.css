@@ -1,0 +1,7 @@
+a.active {
+  background-color: #004d40;
+}
+
+a.brand-logo.active {
+  background-color: transparent;
+}

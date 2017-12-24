@@ -13,7 +13,16 @@ import Header from './components/Header';
 import Logo from './components/Logo';
 
 import Signup from './Signup';
-import Dashboard from './Dashboard'
+import Login from './Login';
+import Logout from './Logout';
+import Dashboard from './Dashboard';
+
+function userHasToken(nextState, replace) {
+  console.log('executei')
+  if(localStorage.getItem('apiKey') === null) {
+    replace('/login');
+  }
+}
 
 class App extends Component {
   render() {
@@ -29,9 +38,11 @@ class App extends Component {
               atEnter={{ opacity: 0 }}
               atLeave={{ opacity: 0 }}
               atActive={{ opacity: 1 }}
-              className="switch-wrapper"
+              className="route-wrapper"
             >
               <Route path="/signup" component={Signup}/>
+              <Route path="/login" component={Login}/>
+              <Route path='/logout' component={Logout} onEnter={userHasToken}/>
               <Route path="/dashboard" component={Dashboard}/>
             </AnimatedSwitch>
           </div>

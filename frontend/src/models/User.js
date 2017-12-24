@@ -1,8 +1,14 @@
 class User {
-  constructor(userData) {
-    this.name = userData.name;
-    this.email = userData.email;
-    this.apiKey = userData.api_key;
+  constructor(userData = {}) {
+    if(localStorage.getItem('apiKey') === null) {
+      this.name = userData.name;
+      this.email = userData.email;
+      this.apiKey = userData.api_key;
+    }else{
+      this.name = localStorage.getItem('name');
+      this.email = localStorage.getItem('email');
+      this.apiKey = localStorage.getItem('apiKey');
+    }
   }
 
   save() {
@@ -13,6 +19,12 @@ class User {
 
   logout() {
     localStorage.clear()
+  }
+
+  loggedIn() {
+    const teste =  (localStorage.getItem('apiKey') === null); 
+    return teste
+    //return this.apiKey !== undefined;
   }
 }
 
