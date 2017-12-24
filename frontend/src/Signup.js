@@ -49,7 +49,10 @@ class SignupForm extends Component {
       }
       setTimeout(() => this.setState({loading: false}), 1000);
     })
-    .catch(() => Materialize.toast("Something went wrong. We hope it works when you try again.", 4000))
+    .catch(() => {
+      Materialize.toast("Something went wrong. We hope it works when you try again.", 4000);
+      setTimeout(() => this.setState({loading: false}), 1000);
+    });
   }
 
   render() {
