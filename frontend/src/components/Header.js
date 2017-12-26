@@ -11,23 +11,23 @@ const Header = props => (
     <nav className="teal darken-3">
       <div className="nav-wrapper">
         <NavLink exact to="/" className="brand-logo center">{props.children}</NavLink>
-        
+
         <If test={Object.keys(props.user).length === 0} >
-          <a href="#" data-activates="mobile-demo" className="right button-collapse">
+          <a href="/#" data-activates="mobile-demo" className="right button-collapse">
             <i className="material-icons">menu</i>
           </a>
-          
+
           <ul className="right hide-on-med-and-down">
-              <li><NavLink to="signup">Sign up</NavLink></li>
-              <li><NavLink to="login">Login</NavLink></li>
+            <li><NavLink to="signup">Sign up</NavLink></li>
+            <li><NavLink to="login">Login</NavLink></li>
           </ul>
 
           <ul id="mobile-demo" className="right side-nav">
-              <li><NavLink to="signup" className="waves-effect">Sign up</NavLink></li>
-              <li><NavLink to="login" className="waves-effect">Login</NavLink></li>
+            <li><NavLink to="signup" className="waves-effect">Sign up</NavLink></li>
+            <li><NavLink to="login" className="waves-effect">Login</NavLink></li>
           </ul>
         </If>
-        <SideNav/>
+        <SideNav />
       </div>
     </nav>
   </div>
@@ -42,4 +42,4 @@ const mapStateToProps = state => ({
   user: state.login,
 });
 
-export default connect(mapStateToProps, null, null, {pure: false})(Header);
+export default connect(mapStateToProps, null, null, { pure: false })(Header);
