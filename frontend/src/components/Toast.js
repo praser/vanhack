@@ -3,6 +3,7 @@ import Materialize from 'materialize-css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addMessage } from '../actions/index';
+import '../assets/css/Toast.css';
 
 class Toast extends Component {
   componentDidUpdate() {
