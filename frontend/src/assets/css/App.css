@@ -1,8 +1,8 @@
 body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
   background: #41c8f2 url('../images/background.png') bottom repeat-x;
+  display: flex;
+  flex-direction: column;  
+  min-height: 100vh;
 }
 
 main {
