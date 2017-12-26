@@ -27,8 +27,7 @@ class LoginForm extends Component {
     this.props.loginRequest(this.email.value, this.password.value);
   }
 
-  render() {
-    const size = 's12';
+  render() {const size = 's12';
     return (
       <Container grid="s10 m8 l6 offset-s1 offset-m2 offset-l3" title="Login">
         <form onSubmit={this.handleSubmit}>
@@ -106,7 +105,7 @@ LoginForm.defaultProps = {
 
 const mapStateToProps = state => ({
   user: state.login,
-  isLoading: state.loginIsLoading,
+  isLoading: state.requestIsLoading,
 });
 
 const mapDispatchToProps = dispatch => ({

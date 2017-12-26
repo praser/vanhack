@@ -154,7 +154,7 @@ SignupForm.defaultProps = {
 
 const mapStateToProps = state => ({
   user: state.login,
-  isLoading: state.loginIsLoading,
+  isLoading: state.requestIsLoading,
 });
 
 const mapDispatchToProps = dispatch => ({
