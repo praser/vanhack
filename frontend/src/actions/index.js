@@ -62,6 +62,7 @@ export function loginRequest(email, password) {
 }
 
 export function logout() {
+  localStorage.removeItem('user');
   return {
     type: 'LOGOUT',
     user: {},
@@ -106,4 +107,11 @@ export function signupRequest(name, email, password, agreement) {
       })
       .catch(() => dispatch(requestHasErrored(true)));
   };
+}
+
+export function loadUser() {
+  return {
+    type: 'LOAD_USER',
+    user: JSON.parse(localStorage.getItem('user')),
+  }
 }

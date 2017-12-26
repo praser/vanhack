@@ -4,6 +4,8 @@ export default function login(state = {}, action) {
       return action.user;
     case 'LOGOUT':
       return {};
+    case 'LOAD_USER':
+      return action.user
 
     default:
       return state;
