@@ -1,9 +1,9 @@
-export function signup(state = {}, action) {
+export default function signup(state = {}, action) {
   switch (action.type) {
     case 'SIGNUP_SUCCESSFULLY':
-      return action.user
-  
+      return action.user;
+
     default:
-      return state
+      return state;
   }
 }

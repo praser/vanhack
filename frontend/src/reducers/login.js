@@ -1,11 +1,11 @@
-export function login(state = {}, action) {
+export default function login(state = {}, action) {
   switch (action.type) {
     case 'LOGIN_SUCCESSFULLY':
-      return action.user
+      return action.user;
     case 'LOGOUT':
-      return {}
-  
+      return {};
+
     default:
-      return state
+      return state;
   }
 }

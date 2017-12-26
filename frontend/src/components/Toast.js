@@ -1,29 +1,35 @@
-import React, {Component} from 'react';
-import Materialize from 'materialize-css/dist/js/materialize.js';
-import {addMessage} from '../actions/index';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import Materialize from 'materialize-css';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addMessage } from '../actions/index';
 
-class Toast extends Component{
+class Toast extends Component {
   componentDidUpdate() {
     Materialize.toast(this.props.message, 4000);
     this.props.addMessage(null);
   }
 
   render() {
-    return <span/>
+    return <span />;
   }
+}
+
+Toast.propTypes = {
+  message: PropTypes.string,
+  addMessage: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    message: state.addMessage
-  }
-}
+Toast.defaultProps = {
+  message: PropTypes.instanceOf(null),
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addMessage: (message) => dispatch(addMessage(message))
-  }
-}
+const mapStateToProps = state => ({
+  message: state.addMessage,
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Toast)
+const mapDispatchToProps = dispatch => ({
+  addMessage: message => dispatch(addMessage(message)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Toast);

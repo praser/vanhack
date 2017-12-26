@@ -1,19 +1,19 @@
 export function requestHasErrored(state = false, action) {
   switch (action.type) {
     case 'REQUEST_HAS_ERRORED':
-      return action.hasErrored
-  
+      return action.hasErrored;
+
     default:
-      return state
+      return state;
   }
 }
 
 export function requestIsLoading(state = false, action) {
   switch (action.type) {
     case 'REQUEST_IS_LOADING':
-      return action.isLoading
-  
+      return action.isLoading;
+
     default:
-      return state
+      return state;
   }
 }
