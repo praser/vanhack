@@ -2,14 +2,10 @@ import '../assets/css/Header.css';
 
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import {connect} from 'react-redux';
 import If from '../components/If';
 
 class Header extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {loggedIn: (localStorage.getItem('apiKey') !== null)};
-  }
-
   render() {
     return(
       <div className="row">
@@ -17,11 +13,11 @@ class Header extends Component{
           <div className="nav-wrapper">
             <NavLink exact to="/" className="brand-logo center">{this.props.children}</NavLink>
             <ul className="right">
-                <If test={this.state.loggedIn === false} >
+                <If test={Object.keys(this.props.user).length === 0} >
                   <li><NavLink to="/signup">Sign up</NavLink></li>
                   <li><NavLink to="/login">Login</NavLink></li>
                 </If>
-                <If test={this.state.loggedIn}>
+                <If test={Object.keys(this.props.user).length !== 0}>
                   <li><NavLink to="/logout">Logout</NavLink></li>
                 </If>
             </ul>
@@ -32,4 +28,10 @@ class Header extends Component{
   }
 };
 
-export default Header
+const mapStateToProps = (state) => {
+  return {
+    user: state.login
+  }
+}
+
+export default connect(mapStateToProps)(Header);

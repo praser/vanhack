@@ -1,24 +1,15 @@
-import Materialize from 'materialize-css/dist/js/materialize.js';
-
 import React, { Component } from 'react';
-import Input from './components/Input';
-import If from './components/If';
-import Loading from './components/Loading';
+import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Container from './components/Container';
-import Form from './models/Form';
-import Remote from './models/Remote';
-import User from './models/User';
+import {loginRequest} from '../actions/index';
+
+import Input from '../components/Input';
+import If from '../components/If';
+import Loading from '../components/Loading';
+import Container from '../components/Container';
+import Form from '../models/Form';
 
 class LoginForm extends Component {
-  constructor(props){
-    super();
-    this.state = {
-      loading: false,
-      triggerRedirect: false,
-    };
-  }
-
   _validate() {
     const form = new Form(
       document.querySelector('form button'), [this.email, this.password]);
@@ -27,37 +18,7 @@ class LoginForm extends Component {
 
   _handleSubmit(event) {
     event.preventDefault();
-    const body = JSON.stringify({
-      email: this.email.value,
-      password: this.password.value
-    });
-
-    this.setState({loading: true})
-    new Remote('http://localhost:3030/authenticate', {
-      body: body,
-      method: 'POST'
-    }).fetch()
-    .then(response => response.json())
-    .then(json => {
-      let message = ''
-      const user = new User(json);
-      console.log(user);
-      if (user.loggedIn()) {
-        user.save();
-        message = `Wellcome back ${user.name}, we are glad to see you here again.`;
-        this.setState({triggerRedirect: true});
-       } else {
-         message = 'Invalid credentials';
-       }
-      
-      Materialize.toast(message, 4000);
-      this.setState({loading: false})
-    })
-    .catch(erro =>{
-      console.log(erro)
-      Materialize.toast('Oops! That is embracing but something whent wrong', 4000);
-      this.setState({loading: false})
-    });
+    this.props.loginRequest(this.email.value, this.password.value)
   }
 
   render() {
@@ -87,10 +48,10 @@ class LoginForm extends Component {
             </button>
           </center>
         </form>
-        <If test={this.state.loading}>
+        <If test={this.props.isLoading}>
           <Loading />
         </If>
-        <If test={this.state.triggerRedirect}>
+        <If test={Object.keys(this.props.user).length > 0}>
           <Redirect to='/dashboard' />
         </If>
       </Container>
@@ -98,4 +59,17 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm
+const mapStateToProps = (state) => {
+  return {
+    user: state.login,
+    isLoading: state.loginIsLoading
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginRequest: (email, password) => dispatch(loginRequest(email, password))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

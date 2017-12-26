@@ -1,28 +1,24 @@
+//CSS
 import './assets/css/App.css';
 import 'materialize-css/dist/css/materialize.css';
-
+//JS
 import 'jquery';
 import 'materialize-css/dist/js/materialize.js';
-
+//IMAGES
 import vanhackLogo from './assets/images/logo.svg';
 
+//COMPONENTS
 import React, { Component } from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
+import {connect} from 'react-redux';
 import Header from './components/Header';
 import Logo from './components/Logo';
-
-import Signup from './Signup';
-import Login from './Login';
-import Logout from './Logout';
-import Dashboard from './Dashboard';
-
-function userHasToken(nextState, replace) {
-  console.log('executei')
-  if(localStorage.getItem('apiKey') === null) {
-    replace('/login');
-  }
-}
+import Toast from './components/Toast';
+import Signup from './views/Signup';
+import Login from './views/Login';
+import Logout from './views/Logout';
+import Dashboard from './views/Dashboard';
 
 class App extends Component {
   render() {
@@ -36,20 +32,29 @@ class App extends Component {
           <div className='content'>
             <AnimatedSwitch
               atEnter={{ opacity: 0 }}
-              atLeave={{ opacity: 0 }}
+              atLeave={{ opacity: 1 }}
               atActive={{ opacity: 1 }}
               className="route-wrapper"
             >
               <Route path="/signup" component={Signup}/>
               <Route path="/login" component={Login}/>
-              <Route path='/logout' component={Logout} onEnter={userHasToken}/>
+              <Route path='/logout' component={Logout}/>
               <Route path="/dashboard" component={Dashboard}/>
             </AnimatedSwitch>
           </div>
+
+          <Toast />
+          
         </div>
       </BrowserRouter>
     );
   }
 }
 
-export default App
+const mapStateToProps = (state) => {
+  return {
+    message: state.addMessage
+  }
+}
+
+export default connect(mapStateToProps)(App);

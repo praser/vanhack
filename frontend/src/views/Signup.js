@@ -1,24 +1,14 @@
-import Materialize from 'materialize-css/dist/js/materialize.js';
-
 import React, { Component } from 'react';
-import Input from './components/Input';
-import If from './components/If';
-import Loading from './components/Loading';
-import User from './models/User';
+import Input from '../components/Input';
+import If from '../components/If';
+import Loading from '../components/Loading';
 import { Redirect } from 'react-router-dom';
-import Container from './components/Container';
-import Form from './models/Form';
-import Remote from './models/Remote';
+import Container from '../components/Container';
+import Form from '../models/Form';
+import {signupRequest} from '../actions/index';
+import {connect} from 'react-redux';
 
 class SignupForm extends Component {
-  constructor(props){
-    super();
-    this.state = {
-      loading: false,
-      triggerRedirect: false,
-    };
-  }
-
   _validate() {
     const form = new Form(
       document.querySelector('form button'),
@@ -29,44 +19,12 @@ class SignupForm extends Component {
 
   _handleSubmit(event) {
     event.preventDefault();
-    
-    let status = 0;
-    const body = JSON.stringify({
-      name: this.name.value,
-      email: this.email.value,
-      password: this.password.value,
-      agreement: this.agreement.value
-    });
-
-    this.setState({loading: true})
-
-    new Remote('http://localhost:3030/users', {
-      body: body,
-      method: 'POST'
-    }).fetch()
-    .then(response => {
-      status = response.status;
-      if(response.ok) {
-        Materialize.toast('Congratulatios! Your account has been created.', 4000);
-      } else {
-        Materialize.toast('Ops, look like you dont fill the form very well. Please double check it and try again.', 4000);
-      }
-      setTimeout(() => this.setState({loading: false}), 1000);
-      return response.json();
-    })
-    .then(json => {
-      const user = new User(json);
-      if (status < 400) {
-        user.save();
-        this.setState({ triggerRedirect: true })
-      } else {
-        user.logout();
-      }
-    })
-    .catch(() => {
-      Materialize.toast("Something went wrong. We hope it works when you try again.", 4000);
-      setTimeout(() => this.setState({loading: false}), 1000);
-    });
+    this.props.signupRequest(
+      this.name.value,
+      this.email.value,
+      this.password.value,
+      this.agreement.value
+    )
   }
 
   render() {
@@ -110,10 +68,10 @@ class SignupForm extends Component {
             </button>
           </center>
         </form>
-        <If test={this.state.loading}>
+        <If test={this.props.isLoading}>
           <Loading />
         </If>
-        <If test={this.state.triggerRedirect}>
+        <If test={Object.keys(this.props.user).length !== 0}>
           <Redirect to='/dashboard' />
         </If>
       </Container>
@@ -121,4 +79,17 @@ class SignupForm extends Component {
   }
 }
 
-export default SignupForm
+const mapStateToProps = (state) => {
+  return {
+    user: state.login,
+    isLoading: state.loginIsLoading
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signupRequest: (name, email, password, agreement) => dispatch(signupRequest(name, email, password, agreement))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
