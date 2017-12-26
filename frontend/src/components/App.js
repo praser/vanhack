@@ -1,4 +1,3 @@
-import 'jquery';
 import React from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
@@ -34,7 +33,6 @@ const App = () => (
           <Route path="/dashboard" component={Dashboard} />
         </AnimatedSwitch>
       </div>
-
       <Toast />
     </div>
   </BrowserRouter>
