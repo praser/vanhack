@@ -20,7 +20,7 @@ class SignupForm extends Component {
   validate() {
     const form = new HTMLFormValidation(
       document.querySelector('form button'),
-      [this.name, this.email, this.password, this.agreement],
+      [this.name, this.email, this.password, this.agreement, this.avatar],
     );
     return (form.handleButton());
   }
@@ -32,6 +32,7 @@ class SignupForm extends Component {
       this.email.value,
       this.password.value,
       this.agreement.value,
+      this.avatar.value,
     );
   }
 
@@ -56,6 +57,24 @@ class SignupForm extends Component {
                 ref={(input) => {
                   this.name = input;
                   return this.name;
+                }}
+              />
+            </Input>
+
+            <Input
+              label="Avatar URL"
+              name="avatar"
+              size={size}
+              msgError="Avartar must be a valid url."
+            >
+              <input
+                name="name"
+                type="url"
+                className="validate"
+                onChange={this.validate}
+                ref={(input) => {
+                  this.avatar = input;
+                  return this.avatar;
                 }}
               />
             </Input>
@@ -158,8 +177,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signupRequest: (name, email, password, agreement) => (
-    dispatch(signupRequest(name, email, password, agreement))
+  signupRequest: (name, email, password, agreement, avatar) => (
+    dispatch(signupRequest(name, email, password, agreement, avatar))
   ),
 });
 

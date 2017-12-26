@@ -76,7 +76,7 @@ export function signupSuccessfully(user) {
   };
 }
 
-export function signupRequest(name, email, password, agreement) {
+export function signupRequest(name, email, password, agreement, avatar) {
   return (dispatch) => {
     dispatch(requestIsLoading(true));
 
@@ -87,6 +87,7 @@ export function signupRequest(name, email, password, agreement) {
         email,
         password,
         agreement,
+        avatar,
       }),
       headers: new Headers({ 'Content-type': 'application/json' }),
     })
@@ -112,6 +113,6 @@ export function signupRequest(name, email, password, agreement) {
 export function loadUser() {
   return {
     type: 'LOAD_USER',
-    user: JSON.parse(localStorage.getItem('user')),
-  }
+    user: JSON.parse(localStorage.getItem('user')) || {},
+  };
 }
