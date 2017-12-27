@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   post '/authenticate', to: 'authentications#authenticate'
   post '/users/', to: 'users#create', as: :user
   
