@@ -8,6 +8,7 @@
     "jquery": "^3.2.1",
     "localstorage-polyfill": "^1.0.1",
     "materialize-css": "^0.100.2",
+    "moment": "^2.20.1",
     "npm": "^5.6.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",

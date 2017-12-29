@@ -52,3 +52,11 @@ export function apiPost(uri, opt, callback) {
       .then(json => dispatch(callback(json)));
   };
 }
+
+// Do GET Request in API
+export function apiGet(uri, options, callback) {
+  return (dispatch) => {
+    dispatch(apiRequest(uri, options))
+    .then(json => dispatch(callback(json)));
+  };
+}

@@ -8,7 +8,7 @@ import If from '../components/If';
 import SideNav from './SideNav';
 
 class Header extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.getLocalUser();
   }
 

@@ -26,7 +26,7 @@ class CategoryForm extends Component {
         <form onSubmit={this.props.onSubmit}>
           <div className="row">
             <Input
-              label="Category name"
+              label="Name"
               name="name"
               size={size}
               msgError="The new category needs a name"
@@ -48,7 +48,7 @@ class CategoryForm extends Component {
                 className="materialize-textarea validate"
                 ref={this.props.descriptionRef}
               />
-              <label htmlFor="description">Category description</label>
+              <label htmlFor="description">Description</label>
             </div>
           </div>
           <center className="row">

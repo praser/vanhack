@@ -1,7 +1,6 @@
 import { API_LAST_RESPONSE } from '../actions/response'
 
 const apiLastResponse = (state = {ok: false}, action) => {
-  console.log('chamou')
   switch (action.type) {
     case API_LAST_RESPONSE:
       return action.apiLastResponse

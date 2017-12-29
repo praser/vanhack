@@ -6,7 +6,7 @@ import If from './If';
 import { createCategory } from '../actions/category'
 import { clearApiLastResponse } from '../actions/response';
 
-class NewCategory extends Component {
+class CategoryNew extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -68,4 +68,4 @@ const mapDispatchToProps = dispatch => ({
   clearApiLastResponse: () => dispatch(clearApiLastResponse())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewCategory);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryNew);

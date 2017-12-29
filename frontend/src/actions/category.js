@@ -1,5 +1,5 @@
-import { apiPost } from './api'
-import { CATEGORY_CREATE_URI } from '../apiRoutes';
+import { apiPost, apiGet } from './api'
+import { CATEGORIES_URI } from '../apiRoutes';
 
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 
@@ -12,7 +12,7 @@ function receiveCategories(categories) {
 
 export function createCategory(category, apiToken){
   const categories = apiPost(
-    CATEGORY_CREATE_URI,
+    CATEGORIES_URI,
     {
       body: JSON.stringify(category),
       successMessage: `The ${category.name} category has been created.`,
@@ -22,6 +22,19 @@ export function createCategory(category, apiToken){
         Authorization: `Bearer ${apiToken}`
       })
     },
+    receiveCategories
+  )
+
+  return categories;
+}
+
+export function getCategories(apiToken) {
+  const categories = apiGet(
+    CATEGORIES_URI,
+    {headers: new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiToken}`
+    })},
     receiveCategories
   )
 

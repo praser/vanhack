@@ -36,6 +36,10 @@ class SignupForm extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.clearApiLastResponse();
+  }
+
   render() {
     const size = 's12';
     return (

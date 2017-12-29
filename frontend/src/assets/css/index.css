@@ -1,5 +1,5 @@
 body {
-  background: #41c8f2 url('../images/background.png') bottom repeat-x;
+  background: #41c8f2 url('../images/background.png') top repeat-x;
   display: flex;
   flex-direction: column;  
   font-family: sans-serif;
