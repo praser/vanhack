@@ -14,7 +14,7 @@ class CategoriesController < ApplicationController
     @category = Category.new(category_params)
 
     if @category.save
-      render json: Category.all, status: :created, location: @category
+      render json: Category.all, status: :created, location: categories_url
     else
       render json: @category.errors, status: :unprocessable_entity
     end
