@@ -6,9 +6,7 @@ const FixedActionSubButton = props => (
   <li>
     <NavLink
       to={props.to}
-      className={`btn-floating tooltipped waves-effect waves-light ${props.color}`}
-      data-position={props.tooltipPosition}
-      data-tooltip={props.tooltipText}
+      className={`btn-floating waves-effect waves-light ${props.color}`}
     >
       <i className="material-icons">{props.icon}</i>
     </NavLink>
@@ -18,13 +16,7 @@ const FixedActionSubButton = props => (
 FixedActionSubButton.propTypes = {
   color: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
-  tooltipPosition: PropTypes.string,
-  tooltipText: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired
-};
-
-FixedActionSubButton.defaultProps = {
-  tooltipPosition: 'botton',
 };
 
 export default FixedActionSubButton;

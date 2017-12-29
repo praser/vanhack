@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import $ from 'jquery';
 import moment from 'moment';
-import { getCategories } from '../actions/category';
-import { getLocalUser } from '../actions/user';
 import '../assets/css/CategoryList.css';
 
 class CategoryList extends Component {
-  componentWillMount() {
-    this.props.getCategories(this.props.user.api_key);
+  componentDidMount() {
+    $('.collapsible').collapsible();
   }
 
   render() {
     let categories = []
 
     for (let category of this.props.categories) {
-      console.log(category.name)
       categories.push(
         <li key={category.id}>
           <div className="collapsible-header">
@@ -43,14 +40,4 @@ class CategoryList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user,
-  categories: state.categories,
-})
-
-const mapDispatchToProps = dispatch => ({
-  getCategories: (apiKey) => dispatch(getCategories(apiKey)),
-  getLocalUser: () => dispatch(getLocalUser())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
+export default CategoryList;

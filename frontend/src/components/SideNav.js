@@ -64,7 +64,15 @@ class SideNav extends Component {
               Logout
             </NavLink>
           </li>
+          
           <li><div className="divider" /></li>
+          
+          <li>
+            <NavLink to="/dashboard" className="waves-effect">
+              <i className="material-icons">dashboard</i>
+              Dashboard
+            </NavLink>
+          </li>
         </ul>
         <If test={Object.keys(this.props.user).length !== 0}>
           <button href="#" data-activates="slide-out" className="button-collapse right">

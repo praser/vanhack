@@ -1,29 +1,53 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import Container from './Container';
-import Input from './Input';
 import HTMLFormValidation from '../assets/js/html_form_validation';
+import { createCategory } from '../actions/category'
+import { clearApiLastResponse } from '../actions/response';
+import Input from './Input';
+import If from './If';
+import { CATEGORIES_URI } from '../apiRoutes'
 
 class CategoryForm extends Component {
   constructor(props) {
     super(props);
     this.validate = this.validate.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validate() {
     const Form = new HTMLFormValidation(
       document.querySelector('form button'),
-      [this.props.nameField],
+      [this.name, this.description],
     );
     return (Form.handleButton());
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const category = {
+      name: this.name.value,
+      description: this.description.value,
+    }
+
+    this.props.createCategory(category, this.props.user.api_key);
+  }
+
+  shouldRedirect() {
+    return (
+      this.props.apiLastResponse.url === CATEGORIES_URI && 
+      this.props.apiLastResponse.status === 201
+    );
   }
 
   render() {
     const size = 's12';
     return (
-      <Container grid="s10 m8 l6 offset-s1 offset-m2 offset-l3" title={this.props.title}>
+      <Container grid="s10 m8 l6 offset-s1 offset-m2 offset-l3" title="Create new category">
         <span />
-        <form onSubmit={this.props.onSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <div className="row">
             <Input
               label="Name"
@@ -37,7 +61,12 @@ class CategoryForm extends Component {
                 className="validate"
                 required
                 onChange={this.validate}
-                ref={this.props.nameRef}
+                ref={
+                  (input) => {
+                    this.name = input;
+                    return this.name;
+                  }
+                }
               />
             </Input>
 
@@ -46,7 +75,12 @@ class CategoryForm extends Component {
                 id="description"
                 name="description"
                 className="materialize-textarea validate"
-                ref={this.props.descriptionRef}
+                ref={
+                  (textarea) => {
+                    this.description = textarea;
+                    return this.description;
+                  }
+                }
               />
               <label htmlFor="description">Description</label>
             </div>
@@ -63,16 +97,23 @@ class CategoryForm extends Component {
             </button>
           </center>
         </form>
+        
+        <If test={this.shouldRedirect()}>
+          <Redirect to='/dashboard' />
+        </If>
       </Container>
     );
   }
 }
 
-CategoryForm.propTypes = {
-  title: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  nameRef: PropTypes.func.isRequired,
-  descriptionRef: PropTypes.func.isRequired,
-};
+const mapStateToProps = state => ({
+  user: state.user,
+  apiLastResponse: state.apiLastResponse
+})
 
-export default CategoryForm;
+const mapDispatchToProps = dispatch => ({
+  createCategory: (category, apiToken) => dispatch(createCategory(category, apiToken)),
+  clearApiLastResponse: () => dispatch(clearApiLastResponse())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryForm);

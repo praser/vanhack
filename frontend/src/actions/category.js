@@ -29,14 +29,20 @@ export function createCategory(category, apiToken){
 }
 
 export function getCategories(apiToken) {
-  const categories = apiGet(
-    CATEGORIES_URI,
-    {headers: new Headers({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiToken}`
-    })},
-    receiveCategories
-  )
+  let categories = [];
 
-  return categories;
+  if (apiToken) {
+    categories = apiGet(
+      CATEGORIES_URI,
+      {headers: new Headers({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiToken}`
+      })},
+      receiveCategories
+    )
+
+    return categories;
+  }
+
+  return receiveCategories(categories);
 }

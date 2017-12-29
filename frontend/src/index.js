@@ -8,14 +8,14 @@ import 'materialize-css/dist/css/materialize.css';
 import './assets/css/index.css';
 import vanhackLogo from './assets/images/logo.svg';
 
-import Home from './components/Home';
+import CategoryForm from './components/CategoryForm';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
+import Home from './components/Home';
 import Loading from './components/Loading';
 import Login from './components/LoginForm';
 import Logo from './components/Logo';
 import Logout from './components/Logout';
-import CategoryNew from './components/CategoryNew';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 import Signup from './components/SignupForm';
@@ -51,7 +51,7 @@ const App = () => (
 
             <PrivateRoute path="/logout" component={Logout} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/categories/new" component={CategoryNew} />
+            <PrivateRoute path="/categories/new" component={CategoryForm} />
 
             <Redirect to="/not_found" />
           </AnimatedSwitch>
