@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :categories
+  resources :categories, only: [:create, :index]
   post '/authenticate', to: 'authentications#authenticate'
   post '/users/', to: 'users#create', as: :user
   
