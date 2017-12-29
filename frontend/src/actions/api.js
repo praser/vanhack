@@ -31,9 +31,11 @@ function apiRequest(uri, options) {
 
           return response.json();
         })
-        .catch(() => {
-          dispatch(addUIMessage(options.errorMessage));
-        })
+        .catch(() => (
+          dispatch(appIsLoading(false)),
+          dispatch(addUIMessage(options.errorMessage)),
+          null
+        ))
     );
   };
 }
