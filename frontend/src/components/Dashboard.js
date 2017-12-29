@@ -7,6 +7,7 @@ const Dashboard = () => (
     <FASB
       color="blue"
       icon="playlist_add"
+      to="/categories/new"
       tooltipPosition="left"
       tooltipText="Add new category"
     />

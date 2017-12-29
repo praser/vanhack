@@ -1,17 +1,13 @@
-import fetch from 'cross-fetch';
 import { appIsLoading } from './loading';
 import { addUIMessage } from './ui_message';
-
-const BASE_URI = 'http://localhost:3030';
-export const USER_AUTH_URI = `${BASE_URI}/authenticate`;
-export const USER_CREATE_URI = `${BASE_URI}/users`;
+import { apiLastResponse } from './response'
 
 function apiRequest(uri, options) {
   const defaultOptions = Object.assign(
     {},
     {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: new Headers({ 'Content-Type': 'application/json' }),
     },
     options,
   );
@@ -22,6 +18,7 @@ function apiRequest(uri, options) {
       fetch(uri, defaultOptions)
         .then((response) => {
           dispatch(appIsLoading(false));
+          dispatch(apiLastResponse(response));
 
           if (response.ok) {
             dispatch(addUIMessage(options.successMessage));
@@ -42,12 +39,13 @@ function apiRequest(uri, options) {
 
 // Do Post Request in API
 export function apiPost(uri, opt, callback) {
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(opt.body),
-    successMessage: opt.successMessage,
-    errorMessage: opt.errorMessage,
-  };
+  const options = Object.assign(
+    {},
+    {
+      method: 'POST',
+    },
+    opt
+  )
 
   return (dispatch) => {
     dispatch(apiRequest(uri, options))

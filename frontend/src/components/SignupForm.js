@@ -7,6 +7,7 @@ import If from '../components/If';
 import Container from '../components/Container';
 import HTMLFormValidation from '../assets/js/html_form_validation';
 import { createUser } from '../actions/user';
+import { clearApiLastResponse } from '../actions/response';
 
 class SignupForm extends Component {
   constructor(props) {
@@ -149,7 +150,7 @@ class SignupForm extends Component {
             </button>
           </center>
         </form>
-        <If test={Object.keys(this.props.user).length !== 0}>
+        <If test={this.props.apiLastResponse.ok}>
           <Redirect to="/dashboard" />
         </If>
       </Container>
@@ -164,10 +165,12 @@ SignupForm.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.user,
+  apiLastResponse: state.apiLastResponse
 });
 
 const mapDispatchToProps = dispatch => ({
   createUser: userData => dispatch(createUser(userData)),
+  clearApiLastResponse: () => dispatch(clearApiLastResponse),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);

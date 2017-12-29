@@ -1,4 +1,5 @@
-import { USER_AUTH_URI, USER_CREATE_URI, apiPost } from './api';
+import { apiPost } from './api';
+import { USER_AUTH_URI, USER_CREATE_URI } from '../apiRoutes';
 
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -12,7 +13,7 @@ function setLocalUser(userData) {
   return data !== null ? localStorage.setItem(lsUserKey, JSON.stringify(data)) : null;
 }
 
-export function receiveUser(user) {
+function receiveUser(user) {
   setLocalUser(user);
 
   return {
@@ -38,7 +39,7 @@ function postUser(userData) {
   const user = apiPost(
     USER_CREATE_URI,
     {
-      body: userData,
+      body: JSON.stringify(userData),
       successMessage: `Welcolme ${userData.name}, your account has been created`,
       errorMessage: 'Ops, we are so sorry to inform you that something went wrong.',
     },
@@ -53,7 +54,7 @@ function getApiUser(credentials) {
   const user = apiPost(
     USER_AUTH_URI,
     {
-      body: credentials,
+      body: JSON.stringify(credentials),
       successMessage: 'Welcome back dear friend.',
       errorMessage: 'Ops, we could not authenticate you. Please try again',
     },
@@ -84,8 +85,4 @@ export function createUser(userData) {
 
 export function getUser(credentials) {
   return loadUser(credentials);
-}
-
-export function loadLocalUser() {
-  return getLocalUser();
 }

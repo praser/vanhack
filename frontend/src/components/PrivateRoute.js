@@ -4,7 +4,9 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const canAccess = Object.keys(rest.user).length > 0;
+  // const canAccess = Object.keys(rest.user).length > 0;
+  const canAccess = true;
+
 
   return (
     <Route

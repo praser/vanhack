@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { clearApiLastResponse } from '../actions/response';
 import { getUser } from '../actions/user';
 import Input from '../components/Input';
 import If from '../components/If';
@@ -28,6 +29,10 @@ class LoginForm extends Component {
       password: this.password.value,
     };
     this.props.getUser(credentials);
+  }
+
+  componentWillUnmount() {
+    this.props.clearApiLastResponse();
   }
 
   render() {
@@ -87,7 +92,7 @@ class LoginForm extends Component {
           </center>
         </form>
 
-        <If test={Object.keys(this.props.user).length > 0}>
+        <If test={this.props.apiLastResponse.ok}>
           <Redirect to="/dashboard" />
         </If>
       </Container>
@@ -102,10 +107,12 @@ LoginForm.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.user,
+  apiLastResponse: state.apiLastResponse
 });
 
 const mapDispatchToProps = dispatch => ({
   getUser: credentials => dispatch(getUser(credentials)),
+  clearApiLastResponse: () => dispatch(clearApiLastResponse())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

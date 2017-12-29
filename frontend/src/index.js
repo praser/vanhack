@@ -15,6 +15,7 @@ import Loading from './components/Loading';
 import Login from './components/LoginForm';
 import Logo from './components/Logo';
 import Logout from './components/Logout';
+import NewCategory from './components/NewCategory';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 import Signup from './components/SignupForm';
@@ -23,6 +24,10 @@ import Toast from './components/Toast';
 import configureStore from './store/configureStore';
 
 const store = configureStore();
+
+store.subscribe(() =>
+  console.log(store.getState())
+)
 
 const App = () => (
   <Provider store={store}>
@@ -42,9 +47,12 @@ const App = () => (
             <Route exact path="/" component={Home} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
+            <Route path="/not_found" component={NotFound} />
+
             <PrivateRoute path="/logout" component={Logout} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <Route path="/not_found" component={NotFound} />
+            <PrivateRoute path="/categories/new" component={NewCategory} />
+
             <Redirect to="/not_found" />
           </AnimatedSwitch>
         </div>

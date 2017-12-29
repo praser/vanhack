@@ -1,15 +1,17 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const FixedActionSubButton = (props) => (
+const FixedActionSubButton = props => (
   <li>
-    <a
+    <NavLink
+      to={props.to}
       className={`btn-floating tooltipped waves-effect waves-light ${props.color}`}
       data-position={props.tooltipPosition}
       data-tooltip={props.tooltipText}
     >
       <i className="material-icons">{props.icon}</i>
-    </a>
+    </NavLink>
   </li>
 );
 
@@ -18,10 +20,11 @@ FixedActionSubButton.propTypes = {
   icon: PropTypes.string.isRequired,
   tooltipPosition: PropTypes.string,
   tooltipText: PropTypes.string.isRequired,
-}
+  to: PropTypes.string.isRequired
+};
 
 FixedActionSubButton.defaultProps = {
   tooltipPosition: 'botton',
-}
+};
 
 export default FixedActionSubButton;
