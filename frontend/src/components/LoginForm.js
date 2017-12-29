@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { loginRequest } from '../actions/index';
+import { getUser } from '../actions/user';
 import Input from '../components/Input';
 import If from '../components/If';
-import Loading from '../components/Loading';
 import Container from '../components/Container';
 import HTMLFormValidation from '../assets/js/html_form_validation';
 
@@ -24,7 +23,11 @@ class LoginForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.loginRequest(this.email.value, this.password.value);
+    const credentials = {
+      email: this.email.value,
+      password: this.password.value,
+    };
+    this.props.getUser(credentials);
   }
 
   render() {
@@ -83,9 +86,7 @@ class LoginForm extends Component {
             </button>
           </center>
         </form>
-        <If test={this.props.isLoading}>
-          <Loading />
-        </If>
+
         <If test={Object.keys(this.props.user).length > 0}>
           <Redirect to="/dashboard" />
         </If>
@@ -95,22 +96,16 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-  loginRequest: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
+  getUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 
-LoginForm.defaultProps = {
-  isLoading: undefined,
-};
-
 const mapStateToProps = state => ({
-  user: state.login,
-  isLoading: state.requestIsLoading,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginRequest: (email, password) => dispatch(loginRequest(email, password)),
+  getUser: credentials => dispatch(getUser(credentials)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

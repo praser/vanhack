@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import Materialize from 'materialize-css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addMessage } from '../actions/index';
+import { addUIMessage } from '../actions/ui_message';
 import '../assets/css/Toast.css';
 
 class Toast extends Component {
   componentDidUpdate() {
-    Materialize.toast(this.props.message, 4000);
-    this.props.addMessage(null);
+    Materialize.toast(this.props.uiMessage, 4000);
+    this.props.addUIMessage(null);
   }
 
   render() {
@@ -17,20 +17,20 @@ class Toast extends Component {
 }
 
 Toast.propTypes = {
-  message: PropTypes.string,
-  addMessage: PropTypes.func.isRequired,
+  uiMessage: PropTypes.string,
+  addUIMessage: PropTypes.func.isRequired,
 };
 
 Toast.defaultProps = {
-  message: PropTypes.instanceOf(null),
+  uiMessage: PropTypes.instanceOf(null),
 };
 
 const mapStateToProps = state => ({
-  message: state.addMessage,
+  uiMessage: state.uiMessage,
 });
 
 const mapDispatchToProps = dispatch => ({
-  addMessage: message => dispatch(addMessage(message)),
+  addUIMessage: uiMessage => dispatch(addUIMessage(uiMessage)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toast);

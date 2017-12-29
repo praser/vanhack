@@ -96,7 +96,7 @@ SideNav.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  user: state.login,
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(SideNav);

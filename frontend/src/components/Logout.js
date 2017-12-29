@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addMessage, logout } from '../actions/index';
+import { logoutUser } from '../actions/user';
+import { addUIMessage } from '../actions/ui_message';
 
 class Logout extends Component {
   componentDidMount() {
-    this.props.logout();
-    this.props.addMessage('Your session has been finished. Hope see you soon.');
+    this.props.logoutUser();
+    this.props.addUIMessage('Your session has been finished. Hope see you soon.');
   }
 
   render() {
@@ -16,18 +17,18 @@ class Logout extends Component {
 }
 
 Logout.propTypes = {
-  logout: PropTypes.func.isRequired,
-  addMessage: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  addUIMessage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  message: state.addMessage,
-  user: state.login,
+  message: state.addUIMessage,
+  user: state.user,
 });
 
 const mapDispacherToProps = dispatcher => ({
-  addMessage: message => dispatcher(addMessage(message)),
-  logout: () => dispatcher(logout()),
+  addUIMessage: message => dispatcher(addUIMessage(message)),
+  logoutUser: () => dispatcher(logoutUser()),
 });
 
 export default connect(mapStateToProps, mapDispacherToProps)(Logout);

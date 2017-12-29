@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import Input from '../components/Input';
 import If from '../components/If';
-import Loading from '../components/Loading';
 import Container from '../components/Container';
 import HTMLFormValidation from '../assets/js/html_form_validation';
-import { signupRequest } from '../actions/index';
+import { createUser } from '../actions/user';
 
 class SignupForm extends Component {
   constructor(props) {
@@ -27,13 +26,13 @@ class SignupForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.signupRequest(
-      this.name.value,
-      this.email.value,
-      this.password.value,
-      this.agreement.value,
-      this.avatar.value,
-    );
+    this.props.createUser({
+      name: this.name.value,
+      email: this.email.value,
+      password: this.password.value,
+      agreement: this.agreement.value,
+      avatar: this.avatar.value,
+    });
   }
 
   render() {
@@ -150,9 +149,6 @@ class SignupForm extends Component {
             </button>
           </center>
         </form>
-        <If test={this.props.isLoading}>
-          <Loading />
-        </If>
         <If test={Object.keys(this.props.user).length !== 0}>
           <Redirect to="/dashboard" />
         </If>
@@ -162,24 +158,16 @@ class SignupForm extends Component {
 }
 
 SignupForm.propTypes = {
-  isLoading: PropTypes.bool,
-  signupRequest: PropTypes.func.isRequired,
+  createUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 
-SignupForm.defaultProps = {
-  isLoading: undefined,
-};
-
 const mapStateToProps = state => ({
-  user: state.login,
-  isLoading: state.requestIsLoading,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({
-  signupRequest: (name, email, password, agreement, avatar) => (
-    dispatch(signupRequest(name, email, password, agreement, avatar))
-  ),
+  createUser: userData => dispatch(createUser(userData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);

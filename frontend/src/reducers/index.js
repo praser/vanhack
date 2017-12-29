@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux';
-import login from './login';
-import addMessage from './toast';
-import { requestHasErrored, requestIsLoading } from './request';
-import signup from './signup';
+import user from './user';
+import loading from './loading';
+import uiMessage from './ui_message';
 
-export default combineReducers({
-  addMessage,
-  login,
-  requestHasErrored,
-  requestIsLoading,
-  signup,
+const rootReducer = combineReducers({
+  user,
+  loading,
+  uiMessage,
 });
+
+export default rootReducer;

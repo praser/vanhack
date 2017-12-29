@@ -3,13 +3,14 @@ import { Route, BrowserRouter } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 import { connect } from 'react-redux';
 import 'materialize-css/dist/css/materialize.css';
-import { loadUser } from '../actions/index';
+import { loadLocalUser } from '../actions/user';
 import Header from './Header';
 import Logo from './Logo';
 import Toast from './Toast';
 import Signup from './SignupForm';
 import Login from './LoginForm';
 import Logout from './Logout';
+import Loading from './Loading';
 import Dashboard from './Dashboard';
 import vanhackLogo from '../assets/images/logo.svg';
 import '../assets/css/App.css';
@@ -35,18 +36,18 @@ const App = () => (
         </AnimatedSwitch>
       </div>
       <Toast />
+      <Loading />
     </div>
   </BrowserRouter>
 );
 
 
 const mapStateToProps = state => ({
-  user: state.loadUser,
-  message: state.addMessage,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatcher => ({
-  loadUser: dispatcher(loadUser()),
+  loadLocalUser: dispatcher(loadLocalUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

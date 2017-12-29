@@ -4,11 +4,11 @@ import FASB from './FixedActionSubButton';
 
 const Dashboard = () => (
   <FAB color="red" icon="add">
-    <FASB 
+    <FASB
       color="blue"
       icon="playlist_add"
       tooltipPosition="left"
-      tooltipText= "Add new category"
+      tooltipText="Add new category"
     />
   </FAB>
 );
