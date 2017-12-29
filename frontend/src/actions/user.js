@@ -6,15 +6,10 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 
 const lsUserKey = 'user';
 
-// Load user from localStorage
-export function getLocalUser() {
-  return JSON.parse(localStorage.getItem(lsUserKey));
-}
-
 // Save user in localStorage
 function setLocalUser(userData) {
-  const user = JSON.stringify(userData);
-  return user ? localStorage.setItem(lsUserKey, user) : false;
+  const data = userData ? userData : null;
+  return data !== null ? localStorage.setItem(lsUserKey, JSON.stringify(data)) : null;
 }
 
 export function receiveUser(user) {
@@ -25,6 +20,12 @@ export function receiveUser(user) {
     user: user || {},
     sessionStarted: Date.now(),
   };
+}
+
+// Load user from localStorage
+export function getLocalUser() {
+  const user = JSON.parse(localStorage.getItem(lsUserKey));
+  return receiveUser(user);
 }
 
 // Remove user from localStorage
@@ -64,7 +65,7 @@ function getApiUser(credentials) {
 
 // Load user from API or localstorage
 function loadUser(credentials) {
-  return getLocalUser() ? getLocalUser() : getApiUser(credentials);
+  return localStorage.key(lsUserKey) ? getLocalUser() : getApiUser(credentials);
 }
 
 export function logoutUser() {
@@ -86,8 +87,5 @@ export function getUser(credentials) {
 }
 
 export function loadLocalUser() {
-  return {
-    type: RECEIVE_USER,
-    user: getLocalUser() || {},
-  };
+  return getLocalUser();
 }

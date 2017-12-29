@@ -1,5 +1,21 @@
 body {
+  background: #41c8f2 url('../images/background.png') bottom repeat-x;
+  display: flex;
+  flex-direction: column;  
   font-family: sans-serif;
   margin: 0;
+  min-height: 100vh;
   padding: 0;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+form {
+  padding: 5px 0;
+}
+
+.col {
+  background-color: #fff;
 }
